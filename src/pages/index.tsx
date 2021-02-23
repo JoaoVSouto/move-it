@@ -1,3 +1,5 @@
+import Head from 'next/head';
+
 import { ExperienceBar } from '../components/ExperienceBar';
 import { Profile } from '../components/Profile';
 import { CompletedChallenges } from '../components/CompletedChallenges';
@@ -8,6 +10,10 @@ import styles from '../styles/pages/Home.module.scss';
 export default function Home() {
   return (
     <main className={styles.container}>
+      <Head>
+        <title>Início | Move.it</title>
+      </Head>
+
       <ExperienceBar />
 
       <section>
