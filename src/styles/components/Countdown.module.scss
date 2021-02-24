@@ -82,6 +82,10 @@
   &:not(:disabled):focus {
     background-color: var(--blue-dark);
   }
+
+  > img {
+    margin-left: 1rem;
+  }
 }
 
 .countdownButtonActive {
@@ -92,6 +96,14 @@
   &:not(:disabled):focus {
     background-color: var(--red);
     color: var(--white);
+
+    > img {
+      filter: brightness(2.5);
+    }
+  }
+
+  > img {
+    margin-left: 0.3rem;
   }
 }
 
