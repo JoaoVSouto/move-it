@@ -24,6 +24,11 @@ interface ChallengesProviderProps {
   children: React.ReactNode;
 }
 
+const EMOJI_BY_ACTIVITY = {
+  body: '🏋️',
+  eye: '👀',
+};
+
 export const ChallengesContext = React.createContext<ChallengesContextData>(
   {} as ChallengesContextData
 );
@@ -34,6 +39,10 @@ export function ChallengesProvider({ children }: ChallengesProviderProps) {
   const [challengesCompleted, setChallengesCompleted] = React.useState(0);
 
   const [activeChallenge, setActiveChallenge] = React.useState<Challenge>(null);
+
+  React.useEffect(() => {
+    Notification.requestPermission();
+  }, []);
 
   const experienceToNextLevel = React.useMemo(
     () => Math.pow((level + 1) * 4, 2),
@@ -49,6 +58,14 @@ export function ChallengesProvider({ children }: ChallengesProviderProps) {
     const challenge = challenges[randomChallengeIndex] as Challenge;
 
     setActiveChallenge(challenge);
+
+    const isUserAwayFromApp = document.hidden;
+
+    if (Notification.permission === 'granted' && isUserAwayFromApp) {
+      new Notification(`Novo desafio ${EMOJI_BY_ACTIVITY[challenge.type]}`, {
+        body: `Valendo ${challenge.amount}xp!`,
+      });
+    }
   }, []);
 
   const resetChallenge = React.useCallback(() => {
