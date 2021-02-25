@@ -41,7 +41,7 @@ export function ChallengesProvider({ children }: ChallengesProviderProps) {
   );
 
   const levelUp = React.useCallback(() => {
-    setLevel(level + 1);
+    setLevel(state => state + 1);
   }, []);
 
   const startNewChallenge = React.useCallback(() => {

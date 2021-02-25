@@ -1,39 +1,18 @@
 import * as React from 'react';
 
-import { ChallengesContext } from '../contexts/ChallengesContext';
+import { CountdownContext } from '../contexts/CountdownContext';
 
 import styles from '../styles/components/Countdown.module.scss';
 
-const INITIAL_COUNTDOWN_SECONDS = 0.1 * 60;
-
 export function Countdown() {
-  const { startNewChallenge } = React.useContext(ChallengesContext);
-
-  const [time, setTime] = React.useState(INITIAL_COUNTDOWN_SECONDS);
-  const [isActive, setIsActive] = React.useState(false);
-  const [hasFinished, setHasFinished] = React.useState(false);
-
-  React.useEffect(() => {
-    if (isActive && time > 0) {
-      setTimeout(() => {
-        // prevents counting an extra second when timer is stopped
-        setIsActive(state => {
-          if (state) {
-            setTime(time - 1);
-          }
-
-          return state;
-        });
-      }, 1000);
-    } else if (isActive && time === 0) {
-      setHasFinished(true);
-      setIsActive(false);
-      startNewChallenge();
-    }
-  }, [isActive, time]);
-
-  const minutes = React.useMemo(() => Math.floor(time / 60), [time]);
-  const seconds = React.useMemo(() => time % 60, [time]);
+  const {
+    minutes,
+    seconds,
+    hasFinished,
+    isActive,
+    resetCountdown,
+    startCountdown,
+  } = React.useContext(CountdownContext);
 
   const [minuteLeft, minuteRight] = React.useMemo(
     () => String(minutes).padStart(2, '0').split(''),
@@ -43,15 +22,6 @@ export function Countdown() {
     () => String(seconds).padStart(2, '0').split(''),
     [seconds]
   );
-
-  const startCountdown = React.useCallback(() => {
-    setIsActive(true);
-  }, []);
-
-  const resetCountdown = React.useCallback(() => {
-    setIsActive(false);
-    setTime(INITIAL_COUNTDOWN_SECONDS);
-  }, []);
 
   return (
     <>
