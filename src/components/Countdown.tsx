@@ -1,10 +1,14 @@
 import * as React from 'react';
 
+import { ChallengesContext } from '../contexts/ChallengesContext';
+
 import styles from '../styles/components/Countdown.module.scss';
 
 const INITIAL_COUNTDOWN_SECONDS = 0.1 * 60;
 
 export function Countdown() {
+  const { startNewChallenge } = React.useContext(ChallengesContext);
+
   const [time, setTime] = React.useState(INITIAL_COUNTDOWN_SECONDS);
   const [isActive, setIsActive] = React.useState(false);
   const [hasFinished, setHasFinished] = React.useState(false);
@@ -24,6 +28,7 @@ export function Countdown() {
     } else if (isActive && time === 0) {
       setHasFinished(true);
       setIsActive(false);
+      startNewChallenge();
     }
   }, [isActive, time]);
 
