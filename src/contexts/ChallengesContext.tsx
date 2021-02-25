@@ -39,20 +39,20 @@ export function ChallengesProvider({ children }: ChallengesProviderProps) {
     [level]
   );
 
-  function levelUp() {
+  const levelUp = React.useCallback(() => {
     setLevel(level + 1);
-  }
+  }, []);
 
-  function startNewChallenge() {
+  const startNewChallenge = React.useCallback(() => {
     const randomChallengeIndex = Math.floor(Math.random() * challenges.length);
     const challenge = challenges[randomChallengeIndex] as Challenge;
 
     setActiveChallenge(challenge);
-  }
+  }, []);
 
-  function resetChallenge() {
+  const resetChallenge = React.useCallback(() => {
     setActiveChallenge(null);
-  }
+  }, []);
 
   return (
     <ChallengesContext.Provider
