@@ -38,3 +38,81 @@
     }
   }
 }
+
+.challengeActive {
+  height: 100%;
+
+  display: flex;
+  flex-direction: column;
+
+  header {
+    color: var(--blue);
+    font-weight: 600;
+    font-size: 1.25rem;
+    padding: 0 0 1.5rem;
+    border-bottom: 1px solid var(--gray-line);
+  }
+
+  section {
+    flex: 1;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    strong {
+      font-weight: 600;
+      font-size: 1.875rem;
+      color: var(--title);
+      margin: 1.5rem 0 0.5rem;
+    }
+
+    p {
+      line-height: 1.5;
+    }
+  }
+
+  footer {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.5rem;
+
+    button {
+      outline: 0;
+      height: 3.125rem;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      border: 0;
+      border-radius: 5px;
+
+      color: var(--white);
+
+      font-size: 1rem;
+      font-weight: 600;
+
+      transition: background-color 200ms;
+
+      &.challengeFailedButton {
+        background-color: var(--red);
+
+        &:hover,
+        &:focus {
+          background-color: darken($color: #e83f5b, $amount: 12%);
+        }
+      }
+
+      &.challengeSucceededButton {
+        background-color: var(--green);
+
+        &:hover,
+        &:focus {
+          background-color: darken($color: #4cd62b, $amount: 10%);
+        }
+      }
+    }
+  }
+}
