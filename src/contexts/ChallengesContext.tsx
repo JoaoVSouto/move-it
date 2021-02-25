@@ -59,6 +59,8 @@ export function ChallengesProvider({ children }: ChallengesProviderProps) {
 
     setActiveChallenge(challenge);
 
+    new Audio('/notification.mp3').play();
+
     const isUserAwayFromApp = document.hidden;
 
     if (Notification.permission === 'granted' && isUserAwayFromApp) {
