@@ -1,5 +1,6 @@
 import * as React from 'react';
 
+import { ChallengesContext } from '../contexts/ChallengesContext';
 import { CountdownContext } from '../contexts/CountdownContext';
 
 import styles from '../styles/components/Countdown.module.scss';
@@ -13,6 +14,7 @@ export function Countdown() {
     resetCountdown,
     startCountdown,
   } = React.useContext(CountdownContext);
+  const { isLevelUpModalOpen } = React.useContext(ChallengesContext);
 
   const [minuteLeft, minuteRight] = React.useMemo(
     () => String(minutes).padStart(2, '0').split(''),
@@ -24,7 +26,7 @@ export function Countdown() {
   );
 
   return (
-    <>
+    <div className={isLevelUpModalOpen ? 'blur' : ''}>
       <div className={styles.countdownContainer}>
         <div>
           <span>{minuteLeft}</span>
@@ -61,6 +63,6 @@ export function Countdown() {
           <img src="icons/play.svg" alt="Iniciar ciclo" />
         </button>
       )}
-    </>
+    </div>
   );
 }

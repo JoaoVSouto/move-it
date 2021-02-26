@@ -10,6 +10,7 @@ export function ChallengeBox() {
     activeChallenge,
     resetChallenge,
     completeChallenge,
+    isLevelUpModalOpen,
   } = React.useContext(ChallengesContext);
   const { resetCountdown } = React.useContext(CountdownContext);
 
@@ -24,7 +25,11 @@ export function ChallengeBox() {
   }, [resetChallenge, resetCountdown]);
 
   return (
-    <div className={styles.challengeBoxContainer}>
+    <div
+      className={`${styles.challengeBoxContainer} ${
+        isLevelUpModalOpen ? 'blur' : ''
+      }`}
+    >
       {activeChallenge ? (
         <div className={styles.challengeActive}>
           <header>Ganhe {activeChallenge.amount} xp</header>

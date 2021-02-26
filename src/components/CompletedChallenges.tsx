@@ -5,7 +5,9 @@ import { ChallengesContext } from '../contexts/ChallengesContext';
 import styles from '../styles/components/CompletedChallenges.module.scss';
 
 export function CompletedChallenges() {
-  const { challengesCompleted } = React.useContext(ChallengesContext);
+  const { challengesCompleted, isLevelUpModalOpen } = React.useContext(
+    ChallengesContext
+  );
 
   const challengesCompletedPadded = React.useMemo(
     () => String(challengesCompleted).padStart(2, '0'),
@@ -13,7 +15,11 @@ export function CompletedChallenges() {
   );
 
   return (
-    <div className={styles.completedChallengesContainer}>
+    <div
+      className={`${styles.completedChallengesContainer} ${
+        isLevelUpModalOpen ? 'blur' : ''
+      }`}
+    >
       <span>Desafios completos</span>
       <span>{challengesCompletedPadded}</span>
     </div>

@@ -17,6 +17,7 @@ interface ChallengesContextData {
   experienceToNextLevel: number;
   challengesCompleted: number;
   activeChallenge: Challenge | null;
+  isLevelUpModalOpen: boolean;
   levelUp(): void;
   startNewChallenge(): void;
   resetChallenge(): void;
@@ -125,6 +126,7 @@ export function ChallengesProvider({
         currentExperience,
         experienceToNextLevel,
         challengesCompleted,
+        isLevelUpModalOpen,
         levelUp,
         startNewChallenge,
         activeChallenge,

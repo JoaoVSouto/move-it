@@ -22,7 +22,7 @@ export default function Home({
   level,
   currentExperience,
   challengesCompleted,
-}) {
+}: HomeProps) {
   return (
     <main className={styles.container}>
       <Head>

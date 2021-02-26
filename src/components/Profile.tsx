@@ -5,10 +5,14 @@ import { ChallengesContext } from '../contexts/ChallengesContext';
 import styles from '../styles/components/Profile.module.scss';
 
 export function Profile() {
-  const { level } = React.useContext(ChallengesContext);
+  const { level, isLevelUpModalOpen } = React.useContext(ChallengesContext);
 
   return (
-    <div className={styles.profileContainer}>
+    <div
+      className={`${styles.profileContainer} ${
+        isLevelUpModalOpen ? 'blur' : ''
+      }`}
+    >
       <img src="https://github.com/JoaoVSouto.png" alt="João Vítor" />
 
       <div>
