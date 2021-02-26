@@ -15,7 +15,8 @@ interface CountdownProviderProps {
   children: React.ReactNode;
 }
 
-const INITIAL_COUNTDOWN_SECONDS = 0.1 * 60;
+const INITIAL_COUNTDOWN_SECONDS =
+  process.env.NODE_ENV === 'development' ? 0.1 * 30 : 25 * 60;
 
 export const CountdownContext = React.createContext({} as CountdownContextData);
 
