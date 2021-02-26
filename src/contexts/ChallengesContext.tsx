@@ -3,6 +3,8 @@ import Cookies from 'js-cookie';
 
 import challenges from '../../challenges.json';
 
+import { LevelUpModal } from '../components/LevelUpModal';
+
 interface Challenge {
   type: 'body' | 'eye';
   description: string;
@@ -50,6 +52,7 @@ export function ChallengesProvider({
   );
 
   const [activeChallenge, setActiveChallenge] = React.useState<Challenge>(null);
+  const [isLevelUpModalOpen, setIsLevelUpModalOpen] = React.useState(false);
 
   React.useEffect(() => {
     Notification.requestPermission();
@@ -68,6 +71,11 @@ export function ChallengesProvider({
 
   const levelUp = React.useCallback(() => {
     setLevel(state => state + 1);
+    setIsLevelUpModalOpen(true);
+  }, []);
+
+  const closeLevelUpModal = React.useCallback(() => {
+    setIsLevelUpModalOpen(false);
   }, []);
 
   const startNewChallenge = React.useCallback(() => {
@@ -125,6 +133,8 @@ export function ChallengesProvider({
       }}
     >
       {children}
+
+      {isLevelUpModalOpen && <LevelUpModal onClose={closeLevelUpModal} />}
     </ChallengesContext.Provider>
   );
 }
