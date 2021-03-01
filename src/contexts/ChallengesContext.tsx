@@ -44,7 +44,7 @@ export function ChallengesProvider({
   children,
   ...rest
 }: ChallengesProviderProps) {
-  const [level, setLevel] = React.useState(rest.level ?? 1);
+  const [level, setLevel] = React.useState(rest.level || 1);
   const [currentExperience, setCurrentExperience] = React.useState(
     rest.currentExperience || 0
   );
