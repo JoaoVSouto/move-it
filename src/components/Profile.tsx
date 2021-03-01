@@ -8,7 +8,12 @@ import styles from '../styles/components/Profile.module.scss';
 export function Profile() {
   const { level, isLevelUpModalOpen } = React.useContext(ChallengesContext);
 
-  const [session] = useSession();
+  const [session, isLoading] = useSession();
+
+  // TODO: loading appears here...
+  if (isLoading) {
+    return <p>Carregando dados de usuário...</p>;
+  }
 
   return (
     <div
