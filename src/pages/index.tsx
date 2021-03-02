@@ -1,11 +1,16 @@
+import * as React from 'react';
 import { GetServerSideProps } from 'next';
 import Head from 'next/head';
-import { getSession, useSession } from 'next-auth/client';
+import { getSession, useSession, signIn } from 'next-auth/client';
 
 import styles from '../styles/pages/Login.module.scss';
 
 export default function Login() {
   const [session, isLoading] = useSession();
+
+  const handleSignIn = React.useCallback(() => {
+    signIn('github');
+  }, []);
 
   if (session && !isLoading) {
     return <p>Acesso negado!</p>;
@@ -26,7 +31,9 @@ export default function Login() {
             <img src="icons/github.svg" alt="Github" />
             Faça login com seu Github para começar
           </p>
-          <button type="button">Entrar</button>
+          <button type="button" onClick={handleSignIn}>
+            Entrar
+          </button>
         </div>
       </section>
     </main>
