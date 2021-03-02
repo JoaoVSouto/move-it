@@ -1,5 +1,8 @@
 import { GetServerSideProps } from 'next';
+import Head from 'next/head';
 import { getSession, useSession } from 'next-auth/client';
+
+import styles from '../styles/pages/Login.module.scss';
 
 export default function Login() {
   const [session, isLoading] = useSession();
@@ -9,8 +12,23 @@ export default function Login() {
   }
 
   return (
-    <main>
-      <h1>login!</h1>
+    <main className={styles.loginContainer}>
+      <Head>
+        <title>Login | Move.it</title>
+      </Head>
+
+      <section>
+        <img src="login-logo.svg" alt="Move.it" />
+
+        <div>
+          <strong>Bem-vindo</strong>
+          <p>
+            <img src="icons/github.svg" alt="Github" />
+            Faça login com seu Github para começar
+          </p>
+          <button type="button">Entrar</button>
+        </div>
+      </section>
     </main>
   );
 }
