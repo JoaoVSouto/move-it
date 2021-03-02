@@ -10,4 +10,7 @@ export default (req: NextApiRequest, res: NextApiResponse) =>
         clientSecret: process.env.GITHUB_SECRET,
       }),
     ],
+    jwt: {
+      secret: process.env.JWT_SECRET,
+    },
   });

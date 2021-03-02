@@ -61,16 +61,19 @@ export default function Home({
 }
 
 export const getServerSideProps: GetServerSideProps = async context => {
-  const { req, res } = context;
+  const { req } = context;
   const { level, currentExperience, challengesCompleted } = req.cookies;
 
   const session = await getSession(context);
 
   if (!session) {
-    res.writeHead(301, {
-      Location: '/',
-    });
-    res.end();
+    return {
+      props: {},
+      redirect: {
+        destination: '/',
+        permanent: false,
+      },
+    };
   }
 
   return {

@@ -41,15 +41,16 @@ export default function Login() {
 }
 
 export const getServerSideProps: GetServerSideProps = async context => {
-  const { res } = context;
-
   const session = await getSession(context);
 
   if (session) {
-    res.writeHead(301, {
-      Location: '/home',
-    });
-    res.end();
+    return {
+      props: {},
+      redirect: {
+        destination: '/home',
+        permanent: false,
+      },
+    };
   }
 
   return {
