@@ -27,8 +27,9 @@ interface ChallengesContextData {
 interface ChallengesProviderProps {
   children: React.ReactNode;
   level: number;
-  currentExperience: number;
+  totalExperience: number;
   challengesCompleted: number;
+  userId: string;
 }
 
 const EMOJI_BY_ACTIVITY = {
@@ -45,9 +46,20 @@ export function ChallengesProvider({
   ...rest
 }: ChallengesProviderProps) {
   const [level, setLevel] = React.useState(rest.level || 1);
-  const [currentExperience, setCurrentExperience] = React.useState(
-    rest.currentExperience || 0
-  );
+  const [currentExperience, setCurrentExperience] = React.useState(() => {
+    if (rest.level === 1) {
+      return rest.totalExperience;
+    }
+
+    const pastLevelsExperience = Array(rest.level - 1)
+      .fill(0)
+      .reduce((totalXp, _, index) => {
+        totalXp += Math.pow((index + 2) * 4, 2);
+        return totalXp;
+      }, 0);
+
+    return rest.totalExperience - pastLevelsExperience;
+  });
   const [challengesCompleted, setChallengesCompleted] = React.useState(
     rest.challengesCompleted || 0
   );
@@ -68,6 +80,19 @@ export function ChallengesProvider({
   const experienceToNextLevel = React.useMemo(
     () => Math.pow((level + 1) * 4, 2),
     [level]
+  );
+
+  const totalExperience = React.useMemo(
+    () =>
+      level === 1
+        ? currentExperience
+        : Array(level - 1)
+            .fill(0)
+            .reduce((totalXp, _, index) => {
+              totalXp += Math.pow((index + 2) * 4, 2);
+              return totalXp;
+            }, 0) + currentExperience,
+    [level, currentExperience]
   );
 
   const levelUp = React.useCallback(() => {
