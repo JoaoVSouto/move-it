@@ -1,5 +1,8 @@
 import * as React from 'react';
-import Cookies from 'js-cookie';
+
+import api from '../services/api';
+
+import useDidMountEffect from '../hooks/useDidMountEffect';
 
 import challenges from '../../challenges.json';
 
@@ -27,8 +30,9 @@ interface ChallengesContextData {
 interface ChallengesProviderProps {
   children: React.ReactNode;
   level: number;
-  currentExperience: number;
+  totalExperience: number;
   challengesCompleted: number;
+  userId: string;
 }
 
 const EMOJI_BY_ACTIVITY = {
@@ -45,9 +49,20 @@ export function ChallengesProvider({
   ...rest
 }: ChallengesProviderProps) {
   const [level, setLevel] = React.useState(rest.level || 1);
-  const [currentExperience, setCurrentExperience] = React.useState(
-    rest.currentExperience || 0
-  );
+  const [currentExperience, setCurrentExperience] = React.useState(() => {
+    if (rest.level === 1) {
+      return rest.totalExperience;
+    }
+
+    const pastLevelsExperience = Array(rest.level - 1)
+      .fill(0)
+      .reduce((totalXp, _, index) => {
+        totalXp += Math.pow((index + 2) * 4, 2);
+        return totalXp;
+      }, 0);
+
+    return rest.totalExperience - pastLevelsExperience;
+  });
   const [challengesCompleted, setChallengesCompleted] = React.useState(
     rest.challengesCompleted || 0
   );
@@ -55,20 +70,37 @@ export function ChallengesProvider({
   const [activeChallenge, setActiveChallenge] = React.useState<Challenge>(null);
   const [isLevelUpModalOpen, setIsLevelUpModalOpen] = React.useState(false);
 
-  React.useEffect(() => {
-    Notification.requestPermission();
-  }, []);
-
-  React.useEffect(() => {
-    Cookies.set('level', String(level));
-    Cookies.set('currentExperience', String(currentExperience));
-    Cookies.set('challengesCompleted', String(challengesCompleted));
-  }, [level, currentExperience, challengesCompleted]);
-
   const experienceToNextLevel = React.useMemo(
     () => Math.pow((level + 1) * 4, 2),
     [level]
   );
+
+  const totalExperience = React.useMemo(
+    () =>
+      level === 1
+        ? currentExperience
+        : Array(level - 1)
+            .fill(0)
+            .reduce((totalXp, _, index) => {
+              totalXp += Math.pow((index + 2) * 4, 2);
+              return totalXp;
+            }, 0) + currentExperience,
+    [level, currentExperience]
+  );
+
+  React.useEffect(() => {
+    Notification.requestPermission();
+  }, []);
+
+  useDidMountEffect(() => {
+    api
+      .put(`/api/users/${rest.userId}`, {
+        level,
+        experience: totalExperience,
+        challenges_completed: challengesCompleted,
+      })
+      .catch(err => console.error(err));
+  }, [rest.userId, level, totalExperience, challengesCompleted]);
 
   const levelUp = React.useCallback(() => {
     setLevel(state => state + 1);

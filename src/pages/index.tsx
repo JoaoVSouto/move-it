@@ -1,66 +1,59 @@
+import * as React from 'react';
 import { GetServerSideProps } from 'next';
 import Head from 'next/head';
+import { getSession, useSession, signIn } from 'next-auth/client';
 
-import { ChallengesProvider } from '../contexts/ChallengesContext';
-import { CountdownProvider } from '../contexts/CountdownContext';
+import styles from '../styles/pages/Login.module.scss';
 
-import { ExperienceBar } from '../components/ExperienceBar';
-import { Profile } from '../components/Profile';
-import { CompletedChallenges } from '../components/CompletedChallenges';
-import { Countdown } from '../components/Countdown';
-import { ChallengeBox } from '../components/ChallengeBox';
+export default function Login() {
+  const [session, isLoading] = useSession();
 
-import styles from '../styles/pages/Home.module.scss';
+  const handleSignIn = React.useCallback(() => {
+    signIn('github');
+  }, []);
 
-interface HomeProps {
-  level: number;
-  currentExperience: number;
-  challengesCompleted: number;
-}
+  if (session && !isLoading) {
+    return <p>Acesso negado!</p>;
+  }
 
-export default function Home({
-  level,
-  currentExperience,
-  challengesCompleted,
-}: HomeProps) {
   return (
-    <main className={styles.container}>
+    <main className={styles.loginContainer}>
       <Head>
-        <title>Início | Move.it</title>
+        <title>Login | Move.it</title>
       </Head>
 
-      <ChallengesProvider
-        level={level}
-        currentExperience={currentExperience}
-        challengesCompleted={challengesCompleted}
-      >
-        <ExperienceBar />
+      <section>
+        <img src="login-logo.svg" alt="Move.it" />
 
-        <CountdownProvider>
-          <section>
-            <div>
-              <Profile />
-              <CompletedChallenges />
-              <Countdown />
-            </div>
-            <div>
-              <ChallengeBox />
-            </div>
-          </section>
-        </CountdownProvider>
-      </ChallengesProvider>
+        <div>
+          <strong>Bem-vindo</strong>
+          <p>
+            <img src="icons/github.svg" alt="Github" />
+            Faça login com seu Github para começar
+          </p>
+          <button type="button" onClick={handleSignIn}>
+            Entrar
+          </button>
+        </div>
+      </section>
     </main>
   );
 }
 
-export const getServerSideProps: GetServerSideProps = async ({ req }) => {
-  const { level, currentExperience, challengesCompleted } = req.cookies;
+export const getServerSideProps: GetServerSideProps = async context => {
+  const session = await getSession(context);
+
+  if (session) {
+    return {
+      props: {},
+      redirect: {
+        destination: '/home',
+        permanent: false,
+      },
+    };
+  }
 
   return {
-    props: {
-      level: Number(level),
-      currentExperience: Number(currentExperience),
-      challengesCompleted: Number(challengesCompleted),
-    },
+    props: {},
   };
 };
