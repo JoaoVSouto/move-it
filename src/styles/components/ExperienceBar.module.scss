@@ -1,7 +1,6 @@
 .experienceBar {
   display: flex;
   align-items: center;
-  margin-bottom: 2rem;
 
   span {
     font-size: 1rem;
@@ -30,4 +29,10 @@
   top: 12px;
   transform: translateX(-50%);
   width: fit-content;
+}
+
+@media only screen and (max-height: 700px), (max-width: 630px) {
+  .experienceBar {
+    margin-bottom: 3rem;
+  }
 }
