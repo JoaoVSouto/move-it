@@ -2,6 +2,10 @@ import { GetServerSideProps } from 'next';
 import Head from 'next/head';
 import { getSession, useSession } from 'next-auth/client';
 
+import api from '../services/api';
+
+import stringifyCookies from '../utils/stringifyCookies';
+
 import { ChallengesProvider } from '../contexts/ChallengesContext';
 import { CountdownProvider } from '../contexts/CountdownContext';
 
@@ -62,7 +66,6 @@ export default function Home({
 
 export const getServerSideProps: GetServerSideProps = async context => {
   const { req } = context;
-  const { level, currentExperience, challengesCompleted } = req.cookies;
 
   const session = await getSession(context);
 
@@ -76,11 +79,22 @@ export const getServerSideProps: GetServerSideProps = async context => {
     };
   }
 
+  const { data: user } = await api.post(
+    '/api/users',
+    {},
+    {
+      headers: {
+        Cookie: stringifyCookies(req.cookies),
+      },
+    }
+  );
+
   return {
     props: {
-      level: Number(level),
-      currentExperience: Number(currentExperience),
-      challengesCompleted: Number(challengesCompleted),
+      level: Number(user.data.level),
+      currentExperience: Number(user.data.experience),
+      challengesCompleted: Number(user.data.challenges_completed),
+      userId: user.ref['@ref'].id,
     },
   };
 };
