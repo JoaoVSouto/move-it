@@ -1,6 +1,6 @@
 import faunadb from 'faunadb';
 
-export default function getFaunaConnection() {
+export default function getConnection() {
   const faunaClient = new faunadb.Client({
     secret: process.env.FAUNADB_SECRET_KEY,
   });
