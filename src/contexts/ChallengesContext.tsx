@@ -1,5 +1,8 @@
 import * as React from 'react';
-import Cookies from 'js-cookie';
+
+import api from '../services/api';
+
+import useDidMountEffect from '../hooks/useDidMountEffect';
 
 import challenges from '../../challenges.json';
 
@@ -67,16 +70,6 @@ export function ChallengesProvider({
   const [activeChallenge, setActiveChallenge] = React.useState<Challenge>(null);
   const [isLevelUpModalOpen, setIsLevelUpModalOpen] = React.useState(false);
 
-  React.useEffect(() => {
-    Notification.requestPermission();
-  }, []);
-
-  React.useEffect(() => {
-    Cookies.set('level', String(level));
-    Cookies.set('currentExperience', String(currentExperience));
-    Cookies.set('challengesCompleted', String(challengesCompleted));
-  }, [level, currentExperience, challengesCompleted]);
-
   const experienceToNextLevel = React.useMemo(
     () => Math.pow((level + 1) * 4, 2),
     [level]
@@ -94,6 +87,20 @@ export function ChallengesProvider({
             }, 0) + currentExperience,
     [level, currentExperience]
   );
+
+  React.useEffect(() => {
+    Notification.requestPermission();
+  }, []);
+
+  useDidMountEffect(() => {
+    api
+      .put(`/api/users/${rest.userId}`, {
+        level,
+        experience: totalExperience,
+        challenges_completed: challengesCompleted,
+      })
+      .catch(err => console.error(err));
+  }, [rest.userId, level, totalExperience, challengesCompleted]);
 
   const levelUp = React.useCallback(() => {
     setLevel(state => state + 1);
