@@ -11,6 +11,9 @@
     display: flex;
     flex-direction: column;
     margin-left: 30%;
+    animation-duration: 1s;
+    animation-fill-mode: both;
+    animation-name: jackInTheBox;
 
     > img {
       margin-bottom: 6rem;
@@ -98,5 +101,27 @@
 @media only screen and (max-width: 320px) {
   .loginContainer section p {
     max-width: unset;
+  }
+}
+
+// got this from animate.css
+@keyframes jackInTheBox {
+  0% {
+    opacity: 0;
+    transform: scale(0.1) rotate(30deg);
+    transform-origin: center bottom;
+  }
+
+  50% {
+    transform: rotate(-10deg);
+  }
+
+  70% {
+    transform: rotate(3deg);
+  }
+
+  100% {
+    opacity: 1;
+    transform: scale(1);
   }
 }
