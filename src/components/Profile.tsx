@@ -10,25 +10,32 @@ export function Profile() {
 
   const [session, isLoading] = useSession();
 
-  // TODO: loading appears here...
-  if (isLoading) {
-    return <p>Carregando dados de usuário...</p>;
-  }
-
   return (
     <div
       className={`${styles.profileContainer} ${
         isLevelUpModalOpen ? 'blur' : ''
       }`}
     >
-      <img src={session.user.image} alt={session.user.name} />
+      {!isLoading ? (
+        <img src={session.user.image} alt={session.user.name} />
+      ) : (
+        <div className={`${styles.shimmer} ${styles.imageShimmer}`} />
+      )}
 
       <div>
-        <strong>{session.user.name}</strong>
-        <p>
-          <img src="icons/level.svg" alt="Nível atual" />
-          Level {level}
-        </p>
+        {!isLoading ? (
+          <strong>{session.user.name}</strong>
+        ) : (
+          <div className={styles.shimmer} />
+        )}
+        {!isLoading ? (
+          <p>
+            <img src="icons/level.svg" alt="Nível atual" />
+            Level {level}
+          </p>
+        ) : (
+          <div className={`${styles.shimmer} ${styles.levelShimmer}`} />
+        )}
       </div>
     </div>
   );

@@ -9,7 +9,7 @@
     object-fit: cover;
   }
 
-  div {
+  > div {
     margin-left: 1.5rem;
 
     strong {
@@ -28,5 +28,52 @@
         margin-right: 0.5rem;
       }
     }
+  }
+}
+
+.shimmer {
+  width: 119px;
+  height: 1.5625rem;
+
+  background: #e6e7e9;
+  background-image: linear-gradient(
+    to right,
+    #e6e7e9 0%,
+    var(--gray-line) 20%,
+    #e6e7e9 40%,
+    #e6e7e9 100%
+  );
+  background-repeat: no-repeat;
+  background-size: 800px 104px;
+  position: relative;
+
+  animation-duration: 1s;
+  animation-fill-mode: forwards;
+  animation-iteration-count: infinite;
+  animation-name: shimmer;
+  animation-timing-function: linear;
+
+  &.levelShimmer {
+    margin-top: 0.5rem;
+
+    height: 1.25rem;
+    width: 76.44px;
+  }
+
+  &.imageShimmer {
+    width: 5.5rem;
+    height: 5.5rem;
+    border-radius: 50%;
+    margin: 0;
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -468px 0;
+  }
+
+  100% {
+    background-position: 468px 0;
   }
 }
