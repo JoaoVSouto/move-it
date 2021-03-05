@@ -15,7 +15,10 @@ export function MenuBar() {
       <ul>
         <li>
           <Link href="/home">
-            <a className={router.pathname === '/home' ? '--active' : ''}>
+            <a
+              className={router.pathname === '/home' ? '--active' : ''}
+              title="Ir para página principal"
+            >
               <svg
                 width="32"
                 height="32"
@@ -43,7 +46,10 @@ export function MenuBar() {
         </li>
         <li>
           <Link href="/ranking">
-            <a className={router.pathname === '/ranking' ? '--active' : ''}>
+            <a
+              className={router.pathname === '/ranking' ? '--active' : ''}
+              title="Ir para página de ranqueamento"
+            >
               <svg
                 width="32"
                 height="32"

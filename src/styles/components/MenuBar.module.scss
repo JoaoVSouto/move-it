@@ -64,6 +64,14 @@
               stroke: var(--blue);
             }
           }
+
+          &:focus {
+            outline: 1px solid var(--blue);
+          }
+
+          &::before {
+            transform: translateX(0);
+          }
         }
 
         &::before {
