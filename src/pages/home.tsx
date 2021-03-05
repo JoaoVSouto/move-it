@@ -14,6 +14,7 @@ import { Profile } from '../components/Profile';
 import { CompletedChallenges } from '../components/CompletedChallenges';
 import { Countdown } from '../components/Countdown';
 import { ChallengeBox } from '../components/ChallengeBox';
+import { MenuBar } from '../components/MenuBar';
 
 import styles from '../styles/pages/Home.module.scss';
 
@@ -41,6 +42,8 @@ export default function Home({
       <Head>
         <title>Início | Move.it</title>
       </Head>
+
+      <MenuBar />
 
       <ChallengesProvider
         level={level}
