@@ -17,7 +17,7 @@ const users: NextApiHandler = async (req, res) => {
 
     try {
       const user = await faunaClient.query(
-        q.Get(q.Match(q.Index('get_user_by_email'), email))
+        q.Get(q.Match(q.Index('get_user_by_avatar_url'), picture))
       );
 
       return res.status(200).json(user);
