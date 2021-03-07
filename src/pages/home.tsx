@@ -45,27 +45,29 @@ export default function Home({
 
       <MenuBar />
 
-      <ChallengesProvider
-        level={level}
-        totalExperience={totalExperience}
-        challengesCompleted={challengesCompleted}
-        userId={userId}
-      >
-        <ExperienceBar />
+      <div>
+        <ChallengesProvider
+          level={level}
+          totalExperience={totalExperience}
+          challengesCompleted={challengesCompleted}
+          userId={userId}
+        >
+          <ExperienceBar />
 
-        <CountdownProvider>
-          <section>
-            <div>
-              <Profile />
-              <CompletedChallenges />
-              <Countdown />
-            </div>
-            <div>
-              <ChallengeBox />
-            </div>
-          </section>
-        </CountdownProvider>
-      </ChallengesProvider>
+          <CountdownProvider>
+            <section>
+              <div>
+                <Profile />
+                <CompletedChallenges />
+                <Countdown />
+              </div>
+              <div>
+                <ChallengeBox />
+              </div>
+            </section>
+          </CountdownProvider>
+        </ChallengesProvider>
+      </div>
     </main>
   );
 }

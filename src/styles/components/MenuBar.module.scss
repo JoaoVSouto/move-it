@@ -3,10 +3,7 @@
   height: 100vh;
   width: 7vw;
   max-width: 112px;
-
-  position: fixed;
-  top: 0;
-  left: 0;
+  min-width: 80px;
 
   display: flex;
   flex-direction: column;
@@ -117,6 +114,51 @@
             path {
               stroke: var(--blue);
             }
+          }
+        }
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 700px) {
+  .menuBarContainer {
+    bottom: 0;
+    left: 0;
+    position: fixed;
+    max-height: 80px;
+    height: 12vh;
+    min-height: 56px;
+    width: 100%;
+    max-width: unset;
+    padding: 0;
+
+    flex-direction: row;
+
+    > div {
+      display: none;
+    }
+
+    ul {
+      flex-direction: row;
+
+      li {
+        height: 100%;
+
+        + li {
+          margin: 0;
+          margin-left: 1rem;
+        }
+
+        a {
+          height: 100%;
+
+          &::before {
+            bottom: 0;
+            width: 100%;
+            height: 4px;
+            border-radius: 5px 5px 0 0;
+            transform: translateX(-102%);
           }
         }
       }
