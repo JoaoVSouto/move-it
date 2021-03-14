@@ -3,6 +3,7 @@ import Head from 'next/head';
 import { getSession, useSession } from 'next-auth/client';
 
 import { MenuBar } from '../components/MenuBar';
+import { Leaderboard as LeaderboardTable } from '../components/Leaderboard';
 
 import styles from '../styles/pages/Leaderboard.module.scss';
 
@@ -23,6 +24,8 @@ export default function Leaderboard() {
 
       <div>
         <h1>Leaderboard</h1>
+
+        <LeaderboardTable />
       </div>
     </main>
   );
