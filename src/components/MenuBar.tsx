@@ -45,9 +45,9 @@ export function MenuBar() {
           </Link>
         </li>
         <li>
-          <Link href="/ranking">
+          <Link href="/leaderboard">
             <a
-              className={router.pathname === '/ranking' ? '--active' : ''}
+              className={router.pathname === '/leaderboard' ? '--active' : ''}
               title="Ir para página de ranqueamento"
             >
               <svg
