@@ -14,6 +14,7 @@ import { Profile } from '../components/Profile';
 import { CompletedChallenges } from '../components/CompletedChallenges';
 import { Countdown } from '../components/Countdown';
 import { ChallengeBox } from '../components/ChallengeBox';
+import { MenuBar } from '../components/MenuBar';
 
 import styles from '../styles/pages/Home.module.scss';
 
@@ -42,27 +43,31 @@ export default function Home({
         <title>Início | Move.it</title>
       </Head>
 
-      <ChallengesProvider
-        level={level}
-        totalExperience={totalExperience}
-        challengesCompleted={challengesCompleted}
-        userId={userId}
-      >
-        <ExperienceBar />
+      <MenuBar />
 
-        <CountdownProvider>
-          <section>
-            <div>
-              <Profile />
-              <CompletedChallenges />
-              <Countdown />
-            </div>
-            <div>
-              <ChallengeBox />
-            </div>
-          </section>
-        </CountdownProvider>
-      </ChallengesProvider>
+      <div>
+        <ChallengesProvider
+          level={level}
+          totalExperience={totalExperience}
+          challengesCompleted={challengesCompleted}
+          userId={userId}
+        >
+          <ExperienceBar />
+
+          <CountdownProvider>
+            <section>
+              <div>
+                <Profile />
+                <CompletedChallenges />
+                <Countdown />
+              </div>
+              <div>
+                <ChallengeBox />
+              </div>
+            </section>
+          </CountdownProvider>
+        </ChallengesProvider>
+      </div>
     </main>
   );
 }
